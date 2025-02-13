@@ -319,7 +319,9 @@ The data are stored in a data frame called `present` which should now be loaded 
 
     <li>2</li>
 
-    <li>3</li> +
+    <li>3</li>
+
+    -   
 
     <li>4</li>
 
@@ -349,7 +351,9 @@ range(present$year)
 
     <ol>
 
-    <li>True</li> +
+    <li>True</li>
+
+    -   
 
     <li>False</li>
 
@@ -372,7 +376,9 @@ present
 
     <li>Every year there are more girls born than boys.</li>
 
-    <li>Every year there are more boys born than girls.</li> +
+    <li>Every year there are more boys born than girls.</li>
+
+    -   
 
     <li>Half of the years there are more boys born, and the other half more girls born.</li>
 
@@ -398,7 +404,9 @@ present %>% mutate(
 
     <li>There is initially an increase in boy-to-girl ratio, which peaks around 1960. After 1960 there is a decrease in the boy-to-girl ratio, but the number begins to increase in the mid 1970s.</li>
 
-    <li>There is initially a decrease in the boy-to-girl ratio, and then an increase between 1960 and 1970, followed by a decrease.</li> +
+    <li>There is initially a decrease in the boy-to-girl ratio, and then an increase between 1960 and 1970, followed by a decrease.</li>
+
+    -   
 
     <li>The boy-to-girl ratio has increased over time.</li>
 
@@ -429,7 +437,9 @@ present
 
     <li>1991</li>
 
-    <li>2007</li> +
+    <li>2007</li>
+
+    -   
 
     </ol>
 
