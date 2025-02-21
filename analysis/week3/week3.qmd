@@ -1,6 +1,8 @@
 ---
 title: "Probability"
 output: statsr:::statswithr_lab
+editor_options: 
+  chunk_output_type: console
 ---
 
 ::: {#instructions}
@@ -9,7 +11,7 @@ Complete all **Exercises**, and submit answers to **Questions** on the Coursera 
 
 ## Hot Hands
 
-Basketball players who make several baskets in succession are described as having a *hot hand*. Fans and players have long believed in the hot hand phenomenon, which refutes the assumption that each shot is independent of the next. However, [a 1985 paper](http://www.sciencedirect.com/science/article/pii/0010028585900106) by Gilovich, Vallone, and Tversky collected evidence that contradicted this belief and showed that successive shots are independent events. This paper started a great controversy that continues to this day, as you can see by Googling *hot hand basketball*.
+Basketball players who make several baskets in succession are described as having a *hot hand*. Fans and players have long believed in the hot hand phenomenon, which refutes the assumption that each shot is independent of the next. However, [a 1985 paper](http://www.sciencedirect.com/science/article/pii/0010028585900106) by Gilovich, Vallone, and Tversky collected evidence that contradicted this belief and showed that successive shots are independent events. This paper started a great controversy (суперечка) that continues to this day, as you can see by Googling *hot hand basketball*.
 
 We do not expect to resolve this controversy today. However, in this lab we'll apply one approach to answering questions like this. The goals for this lab are to (1) think about the effects of independent and dependent events, (2) learn how to simulate shooting streaks in R, and (3) to compare a simulation to actual data in order to determine if the hot hand phenomenon appears to be real.
 
@@ -37,7 +39,7 @@ data(kobe_basket)
 
 This data frame contains 133 observations and 6 variables, where every row records a shot taken by Kobe Bryant. The `shot` variable in this dataset indicates whether the shot was a hit (`H`) or a miss (`M`).
 
-Just looking at the string of hits and misses, it can be difficult to gauge whether or not it seems like Kobe was shooting with a hot hand. One way we can approach this is by considering the belief that hot hand shooters tend to go on shooting streaks. For this lab, we define the length of a shooting streak to be the *number of consecutive baskets made until a miss occurs*.
+Just looking at the string of hits and misses, it can be difficult to gauge (калібрувати, вимірювати) whether or not it seems like Kobe was shooting with a hot hand. One way we can approach this is by considering the belief that hot hand shooters tend to go on shooting streaks. For this lab, we define the length of a shooting streak to be the *number of consecutive baskets made until a miss occurs*.
 
 For example, in Game 1 Kobe had the following sequence of hits and misses from his nine shot attempts in the first quarter:
 
@@ -84,31 +86,24 @@ ggplot(data = kobe_streak, aes(x = length)) +
   geom_histogram(binwidth = 1)
 
 kobe_streak$length %>% IQR()
+kobe_streak$length %>% median()
 ```
 
 3.  Which of the following is false about the distribution of Kobe's streak lengths from the 2009 NBA finals.
 
     <ol>
 
-    <li>The distribution of Kobe's streaks is unimodal and right skewed.</li>
-
-    -   
+    <li>The distribution of Kobe's streaks is unimodal and right skewed.</li> 
 
     <li>The typical length of a streak is 0 since the median of the distribution is at 0.</li>
 
-    -   
-
     <li>The IQR of the distribution is 1.</li>
 
-    -   
 
     <li>The longest streak of baskets is of length 4.</li>
 
-    -   
+    <li>The shortest streak is of length 1.</li> - 
 
-    <li>The shortest streak is of length 1.</li>
-
-    -   
 
     </ol>
 
@@ -138,7 +133,7 @@ Now that we've phrased the situation in terms of independent shots, let's return
 
 ## Simulations in R
 
-While we don't have any data from a shooter we know to have independent shots, that sort of data is very easy to simulate in R. In a simulation, you set the ground rules of a random process and then the computer uses random numbers to generate an outcome that adheres to those rules. As a simple example, you can simulate flipping a fair coin with the following.
+While we don't have any data from a shooter we know to have independent shots, that sort of data is very easy to simulate in R. In a simulation, you set the ground rules of a random process and then the computer uses random numbers to generate an outcome that adheres to ( притримуватись ) those rules. As a simple example, you can simulate flipping a fair coin with the following.
 
 ```{r head-tail}
 coin_outcomes <- c("heads", "tails")
@@ -165,8 +160,7 @@ table(sim_fair_coin)
 Since there are only two elements in `outcomes`, the probability that we "flip" a coin and it lands heads is 0.5. Say we're trying to simulate an unfair coin that we know only lands heads 20% of the time. We can adjust for this by adding an argument called `prob`, which provides a vector of two probability weights.
 
 ```{r sim-unfair-coin}
-sim_unfair_coin <- sample(coin_outcomes, size = 100, replace = TRUE, 
-                          prob = c(0.2, 0.8))
+sim_unfair_coin <- sample(coin_outcomes, size = 100, replace = TRUE, prob = c(0.2, 0.8))
 ```
 
 `prob = c(0.2, 0.8)` indicates that for the two elements in the `outcomes` vector, we want to select the first one, `heads`, with probability 0.2 and the second one, `tails` with probability 0.8. Another way of thinking about this is to think of the outcome space as a bag of 10 chips, where 2 chips are labeled "head" and 8 chips "tail". Therefore at each draw, the probability of drawing a chip that says "head"" is 20%, and "tail" is 80%.
@@ -236,11 +230,28 @@ sim_streak
 
 ```{r plot-sim-streaks}
 # type your code for the Exercise here, and Knit
+sim_streak %>% 
+  group_by(length) %>% summarise(
+  count = n()
+) %>% 
+  ggplot(aes(y = count, x = length)) +
+  geom_col() + 
+  geom_label(aes(label = count)) 
+
 sim_streak %>% ggplot(aes(x = length)) + 
   geom_histogram(binwidth = 1
-  )
+  ) +
+  labs (
+    title = "Independent Shooter"
+  ) +
+  geom_label(stat = "count", aes(y = after_stat(count), label = after_stat(count)), vjust = -0.5) 
+
 ggplot(data = kobe_streak, aes(x = length)) +
-  geom_histogram(binwidth = 1)
+  geom_histogram(binwidth = 1) + 
+  labs(
+    title = "Kobe's shots"
+  ) +
+  geom_label(stat = "count", aes(y = after_stat(count), label = after_stat(count)), vjust = -0.3)
 ```
 
 4.  If you were to run the simulation of the independent shooter a second time, how would you expect its streak distribution to compare to the distribution from the exercise above?
@@ -249,7 +260,9 @@ ggplot(data = kobe_streak, aes(x = length)) +
 
     <li>Exactly the same</li>
 
-    <li>Somewhat similar</li> +
+    <li>Somewhat similar</li>
+
+    -   
 
     <li>Totally different</li>
 
@@ -259,11 +272,12 @@ ggplot(data = kobe_streak, aes(x = length)) +
 
     <ol>
 
-    <li>The distributions look very similar. Therefore, there doesn't appear to be evidence for Kobe Bryant's hot hand.</li> +
+    <li>The distributions look very similar. Therefore, there doesn't appear to be evidence for Kobe Bryant's hot hand.</li>
+
 
     <li>The distributions look very similar. Therefore, there appears to be evidence for Kobe Bryant's hot hand.</li>
 
-    <li>The distributions look very different. Therefore, there doesn't appear to be evidence for Kobe Bryant's hot hand.</li>
+    <li>The distributions look very different. Therefore, there doesn't appear to be evidence for Kobe Bryant's hot hand.</li> +
 
     <li>The distributions look very different. Therefore, there appears to be evidence for Kobe Bryant's hot hand.</li>
 
