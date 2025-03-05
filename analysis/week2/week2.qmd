@@ -186,7 +186,9 @@ Note that we can separate the conditions using commas if we want flights that ar
 
     <ol>
 
-    <li>68</li> +
+    <li>68</li>
+
+    -   
 
     <li>1345</li>
 
@@ -212,11 +214,15 @@ sfo_feb_flights <- nycflights %>%
 
     <li>The distribution is right skewed.</li>
 
-    <li>No flight is delayed more than 2 hours.</li> +
+    <li>No flight is delayed more than 2 hours.</li>
+
+    -   
 
     <li>The distribution has several extreme values on the right side.</li>
 
-    <li>More than 50% of flights arrive on time or earlier than scheduled.</li> -
+    <li>More than 50% of flights arrive on time or earlier than scheduled.</li>
+
+    -   
 
     </ol>
 
@@ -225,6 +231,8 @@ sfo_feb_flights <- nycflights %>%
 sfo_feb_flights %>% 
   ggplot(aes(x = arr_delay)) + 
   geom_histogram()
+sfo_feb_flights %>% 
+  TabularManifest::histogram_continuous("arr_delay")
 ```
 
 Another useful functionality is being able to quickly calculate summary statistics for various groups in your data frame. For example, we can modify the above command using the `group_by` function to get the same summary stats for each origin airport:
@@ -247,7 +255,9 @@ Here, we first grouped the data by `origin`, and then calculated the summary sta
 
     <li>Virgin America</li>
 
-    <li>Delta and United Airlines</li> +
+    <li>Delta and United Airlines</li>
+
+    -   
 
     <li>Frontier Airlines</li>
 
@@ -282,11 +292,11 @@ nycflights %>%
 
     <ol>
 
-    <li>January</li> +
+    <li>January</li>
 
     <li>March</li>
 
-    <li>July</li>
+    <li>July</li> +
 
     <li>October</li>
 
@@ -296,14 +306,19 @@ nycflights %>%
 
 ```{r highest-avg-dep-delay-month}
 # type your code for Question 4 here, and Knit
-
+nycflights %>%
+  group_by(month) %>%
+  summarise(mean_dd = mean(dep_delay)) %>%
+  arrange(desc(mean_dd))
 ```
 
 5.  Which month has the highest median departure delay from an NYC airport?
 
     <ol>
 
-    <li>January</li> +
+    <li>January</li>
+
+    -   
 
     <li>March</li>
 
@@ -332,9 +347,13 @@ nycflights %>%
 
     <li>Median would be more reliable as the distribution of delays is skewed.</li>
 
-    <li>Median would be more reliable as the distribution of delays is symmetric. </li> +
+    <li>Median would be more reliable as the distribution of delays is symmetric.</li>
 
-    <li>Both give us useful information.</li> +
+    -   
+
+    <li>Both give us useful information.</li>
+
+    -   
 
     </ol>
 
@@ -388,7 +407,9 @@ nycflights %>%
 
     <li>JFK</li>
 
-    <li>LGA</li> +
+    <li>LGA</li>
+
+    -   
 
     </ol>
 
@@ -408,7 +429,9 @@ ggplot(data = nycflights, aes(x = origin, fill = dep_type)) +
 
     <ol>
 
-    <li>N666DN</li> +
+    <li>N666DN</li>
+
+    -   
 
     <li>N755US</li>
 
@@ -432,13 +455,15 @@ nycflights %>%
 
     <ol>
 
-    <li>As distance increases the average speed of flights decreases.</li> +
+    <li>As distance increases the average speed of flights decreases.</li>-
 
-    <li>The relationship is linear.</li>
+    <li>The relationship is linear.</li> -
 
-    <li>There is an overall postive association between distance and average speed.</li> +-
+    <li>There is an overall postive association between distance and average speed.</li>
 
-    <li>There are no outliers.</li>
+    \+
+
+    <li>There are no outliers.</li> -
 
     <li>The distribution of distances are uniform over 0 to 5000 miles.</li>
 
@@ -463,3 +488,38 @@ nycflights %>%
   ) 
 
 ```
+```{r}
+nycflights %>% print()
+ds <- tibble(nycflights)
+ds %>% print()
+glimpse(ds)
+ds %>% 
+  group_by(origin, dest, year, month, day, dep_time, tailnum) %>% 
+  summarise(
+    n = n()
+  ) %>% 
+  ungroup() %>% 
+  filter(
+    n >= 1
+  ) %>% 
+  print()
+ds %>% count()
+
+ds %>% 
+  group_by(origin, dest, year, month, day, dep_time) %>% 
+  mutate(
+    n = n()
+  ) %>% 
+  ungroup() %>% 
+  select(origin, dest, year, month, day, dep_time, tailnum, n) %>% 
+  filter(
+    n > 1
+  )
+
+# A grain of dataset is a set of columns that uniquely  define each row 
+a <- c(2,5,7,12,13,8)
+mean(a)
+median(a)
+
+```
+
