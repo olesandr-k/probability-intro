@@ -1,0 +1,265 @@
+---
+title: "Exploring the BRFSS data"
+output: 
+  html_document: 
+    fig_height: 4
+    highlight: pygments
+    theme: spacelab
+editor_options: 
+  chunk_output_type: console
+---
+
+## Setup
+
+### Load packages
+
+```{r load-packages, message = FALSE}
+library(ggplot2)
+library(dplyr)
+library(stats)
+library(psycho)
+library(corrplot)
+library(patchwork)
+
+```
+
+### Load data
+
+
+
+```{r load-data}
+file.exists("/Users/muaro/Documents/GitHub/probability-intro/analysis/week4/brfss2013")
+load(file = '/Users/muaro/Documents/GitHub/probability-intro/analysis/week4/brfss2013')
+getwd()
+
+
+```
+
+------------------------------------------------------------------------
+
+## Part 1: Data
+
+The data is Brfss2013
+------------------------------------------------------------------------
+
+## Part 2: Research questions
+
+**Research quesion 1:**
+In this Research question I will observe different habits and their affect on people's lifes (smoking, doing sport, time of sleeping, weight).
+
+**Research quesion 2:**
+
+**Research quesion 3:**
+
+------------------------------------------------------------------------
+
+## Part 3: Exploratory data analysis
+
+NOTE: Insert code chunks as needed by clicking on the "Insert a new code chunk" button (green button with orange arrow) above. Make sure that your code is visible in the project you submit. Delete this note when before you submit your work.
+
+```{r}
+#| label: intro
+#| code-fold: true
+#| code-summary: Preparing
+#| results: hide
+#| warning: false
+ds <- 
+brfss2013 %>% select(sex, fmonth, iday, X_state, wtkg3, X_bmi5, educa, marital, veteran3, flushot6, strength, exerhmm2, exeroft2, exract11, exerany2, smoke100, smokday2, lastsmk2, alcday5, avedrnk2, asthnow, addepev2, cvdinfr4, sleptim1, physhlth, menthlth, genhlth, X_ageg5yr, X_llcpwt, exract21, income2, htm4, X_bmi5cat,exerhmm1	)  %>% 
+  mutate(
+    wtkg3 = as.numeric(wtkg3)/100
+    ,X_bmi5 = as.numeric(X_bmi5)/100
+  ) 
+```
+
+## Research question 1:
+
+
+# Impact of bad habits on life
+
+
+
+**Status of weight of people**
+
+```{r}
+#| label: r1-1
+#| code-fold: true
+#| code-summary: Code for Research 1-1
+#| results: markup
+#| warning: false
+#| width: 15
+#| height: 20
+
+
+
+
+ds1 <- 
+  ds %>% 
+  select(wtkg3, X_bmi5, educa, veteran3, strength, exract11, exract21, X_bmi5cat, exerany2, exerhmm1, exerhmm2, smoke100, smokday2, asthnow, sleptim1, genhlth, physhlth, menthlth)
+
+# ds1 %>% TabularManifest::histogram_continuous("physhlth")
+# ds1 %>% TabularManifest::histogram_continuous("menthlth")
+
+
+
+g1 <- ds1 %>%
+  filter(
+    !is.na(X_bmi5cat)
+    , exerany2 == "No"
+  ) %>%
+  ggplot(aes(x = X_bmi5cat)) +
+  geom_bar() +
+  geom_label(stat = "count", aes(y = after_stat(count), label = after_stat(count)), vjust = -0.5) +
+  scale_y_continuous(limits = c(0, 55000), breaks = seq(0, 55000, by = 10000)) + 
+  labs(
+    title = "Without activity"
+    ,x= "Status"
+    , y = "Num of people"
+  ) + 
+  theme_minimal()
+
+g2 <- ds1 %>%
+  filter(
+    !is.na(X_bmi5cat)
+    , exerany2 == "Yes"
+  ) %>%
+  ggplot(aes(x = X_bmi5cat)) +
+  geom_bar() +
+  geom_label(stat = "count", aes(y = after_stat(count), label = after_stat(count)), vjust = -0.5) +
+  scale_y_continuous(limits = c(0, 130000), breaks = seq(0, 130000, by = 30000))+
+  labs(
+    title = "With activity"
+    , x = "Status"
+    , y = "Num of people"
+  ) + 
+  theme_minimal()
+  
+g1 + g2
+
+v1 <- round(ds1 %>% filter( X_bmi5cat == "Normal weight", exerany2 == "Yes") %>% nrow()/ds1 %>% nrow() * 100, 1)/ round(ds1 %>% filter( X_bmi5cat == "Normal weight", exerany2 == "No") %>% nrow()/ds1 %>% nrow() * 100, 1) 
+
+
+
+```
+
+The percentage of people with normal weight who regular doing sport is **`r round(ds1 %>% filter( X_bmi5cat == "Normal weight", exerany2 == "Yes") %>% nrow()/ds1 %>% nrow() * 100, 1)`%**, and the percentage of people with normal weight who are not regular doing sport is **`r round(ds1 %>% filter( X_bmi5cat == "Normal weight", exerany2 == "No") %>% nrow()/ds1 %>% nrow() * 100, 1)`%**.
+
+The difference almost in **`r  v1 %>% round(1)`** times. So the person who do not doing any sport regular more likely to be overweight or underweight.
+
+```{r}
+#| label: r1-2
+#| code-fold: true
+#| code-summary: Code for Research 1-2
+#| results: markup
+#| warning: false
+#| width: 15
+#| height: 20
+
+ds12 <- ds1 %>% select(strength, sleptim1, genhlth)  %>% 
+  mutate(
+    strength = round(ifelse(strength >= 100 & strength < 200,strength - 100,ifelse(strength >= 200 & strength < 300,(strength - 200) / 12,ifelse(strength >= 1 & strength < 10,strength, strength))))
+    )
+
+  ds13 <- ds12 %>% 
+  filter(
+    !is.na(strength)
+    , strength < 5000
+    , strength != 0
+  ) 
+median_strength <- median(ds13$strength)
+
+ds12 %>% 
+  filter(
+    !is.na(strength)
+    , strength < 5000
+    , strength != 0
+  ) %>%  
+  group_by(strength) %>% 
+  summarise(
+    count = n()
+  ) %>% mutate(
+    strength_group = case_when(
+      strength >= 1 & strength <= 4 ~ "1-4",
+      strength >= 5 & strength <= 10 ~ "5-10",
+      strength >= 11 & strength <= 20 ~ "11-20",
+      strength >= 21 & strength <= 35 ~ "21-35",
+      strength >= 36 & strength <= 99 ~ "36-99",
+      TRUE ~ as.character(strength)  # Keep original value for other cases
+    ) 
+  ) %>% ungroup() %>% 
+  group_by(strength_group) %>% 
+  summarise(
+    count = sum(count)
+  ) %>% 
+  mutate(strength_group = factor(strength_group, levels = c("1-4", "5-10", "11-20", "21-35", "36-99"))) %>% 
+  ggplot(aes(x = strength_group, y = count)) +
+  geom_col() +
+  geom_text(aes(label = count), vjust = -0.5) + 
+  ylim(0,115000) +
+  labs(
+    title = "Number of training per month"
+    , x = "Number of training"
+    , y = "Number of people"
+  ) + 
+  theme_minimal()
+
+    ds13 <- ds12 %>% 
+  filter(
+    !is.na(strength)
+     , strength < 5000
+     , strength != 0
+  ) 
+    
+
+median_strength <- median(ds13$strength)
+mean_strength <- mean(ds13$strength)
+
+
+ds14 <- 
+  ds12 %>% 
+  filter(
+    !is.na(sleptim1)
+    , sleptim1 < 100
+  )
+mean_sleptime <- mean(ds14$sleptim1)
+median_sleptime <- median(ds14$sleptim1)
+
+
+
+ds12 %>% 
+  filter(
+    !is.na(sleptim1)
+    , sleptim1 < 100
+  ) %>% 
+group_by(sleptim1) %>% 
+  summarise(
+    count = n()
+  ) %>% print(n = Inf) %>% 
+  ggplot(aes(x = sleptim1, y = count)) + 
+  geom_col() +
+  geom_vline(xintercept = mean_sleptime, linetype = "dashed", color = "green") + 
+  geom_text(aes(x = mean_sleptime, y = max(count) * 0.95, label = round(mean_sleptime, 2)),hjust = -1.5, vjust = 0, color = "green") +
+  theme_minimal() + 
+  labs(
+    title = "Sleep time per person"
+    , x = "Sleep time"
+    , y = "Number of people"
+  ) + 
+  scale_x_continuous(breaks = seq(0,25,2), minor_breaks = seq(0,25,5)) + 
+  scale_y_continuous(breaks = seq(0, 150000, 20000))
+  
+
+
+```
+
+
+**Research quesion 2:**
+
+```{r}
+
+```
+
+**Research quesion 3:**
+
+```{r}
+
+```
