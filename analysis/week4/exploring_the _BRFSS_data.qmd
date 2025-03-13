@@ -14,6 +14,14 @@ editor_options:
 ### Load packages
 
 ```{r load-packages, message = FALSE}
+#| label: data1
+#| code-fold: true
+#| code-summary: load packages
+#| results: hide
+#| warning: false
+
+
+
 library(ggplot2)
 library(dplyr)
 library(stats)
@@ -28,6 +36,13 @@ library(patchwork)
 
 
 ```{r load-data}
+#| label: data2
+#| code-fold: true
+#| code-summary: Getting data
+#| results: hide
+#| warning: false
+
+
 file.exists("/Users/muaro/Documents/GitHub/probability-intro/analysis/week4/brfss2013")
 load(file = '/Users/muaro/Documents/GitHub/probability-intro/analysis/week4/brfss2013')
 getwd()
@@ -39,7 +54,10 @@ getwd()
 
 ## Part 1: Data
 
+
 The data is Brfss2013
+
+
 ------------------------------------------------------------------------
 
 ## Part 2: Research questions
@@ -50,7 +68,7 @@ What is the relationship between regular exercise (exerany2) and overall life sa
 **Research quesion 2:**
 Are richer people happier?
 
-People with higher level of income (income2) have their emotional needs fulfilled better. 
+People with higher level of income (income2) have their emotional needs fulfilled better. (emtsuprt)
 
 **Research quesion 3:**
 Does mental health (qlmentl2, qlstres2, qlhlth2) of men and women (sex) react differently to lack of sleep (sleptim1).
@@ -58,13 +76,7 @@ Does mental health (qlmentl2, qlstres2, qlhlth2) of men and women (sex) react di
 
 ------------------------------------------------------------------------
 
-## Part 3: Exploratory data analysis
 
-NOTE: Insert code chunks as needed by clicking on the "Insert a new code chunk" button (green button with orange arrow) above. Make sure that your code is visible in the project you submit. Delete this note when before you submit your work.
-
-```{r}
-
-```
 
 
 ## Question 1 - Happy people exercise
@@ -85,8 +97,8 @@ We hypothesis that people who exercise regularly have higher life satisfacton an
 ds1 <- brfss2013 %>% 
   select(exerany2, lsatisfy, genhlth) 
 
-tableone::CreateTableOne(data = ds1)
-ds1 %>% count(exerany2)
+# tableone::CreateTableOne(data = ds1)
+# ds1 %>% count(exerany2)
 
 t1 <- 
   ds1 %>%
@@ -108,18 +120,425 @@ t1 %>% ggplot(aes(x = lsatisfy, y = prop, fill = exerany2)) +
   geom_col(position = position_dodge2(preserve = "single", padding = ), alpha = 0.5) +
   geom_text(aes(label = scales::percent(prop), color = exerany2))
 
-t1
 ```
 
 
-**Research quesion 2:**
+## Question 2 - Does money help you?
+
+Are there any depended between the outcome and emotional health?
+
+Which class of people have the most stable emotional health.
+```{r}
+#| label: r2-1
+#| code-fold: true
+#| code-summary: Code for Research 2-1
+#| results: markup
+#| warning: false
+
+ds2 <- brfss2013 %>% select(income2, emtsuprt)
+# tableone::CreateTableOne(data = ds2)
+
+# ds2 %>% count(income2)
+
+t2 <- 
+  ds2 %>% 
+  filter(
+    !is.na(income2)
+    , !is.na(emtsuprt)
+  ) %>% 
+  group_by(emtsuprt, income2) %>% 
+  summarise(
+    num = n()
+  ) %>% ungroup() %>% 
+  mutate(
+    total = sum(num)
+    , prop = num/total
+  ) %>% ungroup() 
+  # print(n = Inf)
+# t2
+
+
+t2 %>% 
+  ggplot(aes(x = emtsuprt,y = prop, fill = emtsuprt)) + 
+  geom_col(position = position_dodge(width = 2), width = 0.8) +
+  facet_wrap(~ income2) +
+  #geom_text(aes(label =  scales::percent("Always")), vjust = -3) +
+    labs(
+      title = "The distribution of people with different outcomes"
+      ,x = "Frequensy of needed help"
+      ,y = "The percentage of people"
+      , subtitle = "The distribution of people's needed of emotional health with total number of people"
+    ) +
+  theme_minimal() + 
+   theme(axis.text.x = element_blank())
+
+ds2 %>% 
+  filter(
+    !is.na(income2)
+    , !is.na(emtsuprt)
+  ) %>% 
+  group_by(emtsuprt, income2) %>% 
+  summarise(
+    num = n()
+  ) %>% ungroup() %>% 
+  group_by(income2) %>% 
+  mutate(
+    total = sum(num)
+    , prop = num/total
+  ) %>% ungroup() %>% ggplot(aes(x = emtsuprt,y = prop, fill = emtsuprt)) + 
+  geom_col(position = position_dodge(width = 2), width = 0.8) +
+  facet_wrap(~ income2) +
+  #geom_text(aes(label =  scales::percent("Always")), vjust = -3) +
+    labs(
+      title = "The distribution of people with different outcomes"
+      ,x = "Frequensy of needed help"
+      ,y = "The percentage of people"
+      , subtitle = "The distribution of people's needed of emotional health in each outcome group"
+      , fill = "Frequency"
+    ) +
+  theme_minimal() + 
+   theme(axis.text.x = element_blank())
+
+```
+
+Outcome does not affect on emotional health.
+
+
+## Question 3 - Is lack of sleep serious proplem?  
+
+
+
+How different men's and women's time of sleep? 
 
 ```{r}
+#| label: r3-1
+#| code-fold: true
+#| code-summary: Code for Research 3-1
+#| results: markup
+#| warning: false
+
+ds3 <- brfss2013 %>% 
+  select(qlmentl2, qlstres2, qlhlth2, sex, sleptim1)
+
+# tableone::CreateTableOne(data = ds3)
+
+t31 <- 
+  ds3 %>% 
+  filter(
+    !is.na(sex)
+    , !is.na(sleptim1)
+    , sleptim1 < 15
+  ) %>% 
+  group_by(sleptim1,sex) %>% 
+  summarise(
+    num = n()
+  ) %>% ungroup() %>% 
+  mutate(
+    total = sum(num)
+  ) %>% 
+  group_by(sex) %>% 
+  mutate(
+    total_s = sum(num)
+    , prop_s = num/total_s
+    , mean = weighted.mean(sleptim1, w = num)
+  )
+
+mean_female <- round(t31$mean[1], 2) 
+   
+
+mean_male <-  round(t31$mean[2], 2)
+
+
+t31 %>% 
+  filter(
+    sleptim1 < 13
+  ) %>% 
+  ggplot(aes(x = sleptim1, y = prop_s, fill = sex)) + 
+  geom_col(position = position_dodge2(preserve = "single", padding = )) +
+  scale_fill_manual(values = c("Male" = "royalblue1", "Female" = "violet")) + 
+  geom_vline(xintercept = mean_male, color = "royalblue4", linetype = "dashed", linewidth = 1) +
+  geom_vline(xintercept = mean_female, color = "violetred1", linetype = "dashed", linewidth = 1) +
+  theme_minimal() +
+  labs(
+    title = "Time of sleep (men and women)"
+    , x = "Sleep time"
+    , y = "Percentage of people"
+    , fill = "Sex"
+  )
+  
+  
 
 ```
 
-**Research quesion 3:**
+**How time of sleep affect to depression between men and female? **
+
 
 ```{r}
+#| label: r3-2
+#| code-fold: true
+#| code-summary: Code for Research 3-2
+#| results: markup
+#| warning: false
+
+t321 <- ds3 %>% select(qlmentl2, sex, sleptim1) %>% 
+  group_by(qlmentl2, sleptim1, sex) %>% 
+  summarise(
+    num = n()
+  ) %>% ungroup() %>% 
+  filter(
+    !is.na(qlmentl2)
+    , !is.na(sleptim1)
+    , sex == "Male"
+  ) %>% group_by(qlmentl2) %>% 
+  mutate(
+    mean_sleep = round(mean(sleptim1), 1)
+  ) %>% ungroup() %>% distinct() %>% 
+  select(qlmentl2, num, mean_sleep) %>% 
+  group_by(qlmentl2, mean_sleep) %>% 
+  summarise(
+    num = sum(num)
+  ) %>% 
+  ungroup() %>%
+  mutate(
+    total = sum(num)
+    , prop = round(num/total, 2)
+  ) 
+  
+g31 <- t321 %>% ggplot(aes(x = qlmentl2, y = prop)) +
+  geom_col() +
+  geom_text(aes(label = mean_sleep), vjust = -1, size = 3)+
+  scale_y_continuous(limits = c(0,0.8), breaks = seq(0,0.8,0.1))+
+    scale_x_continuous(breaks = seq(0,30,5)) +
+  annotate("text", x = mean(range(t321$qlmentl2)), y = 0.4, label = round(mean(t321$mean_sleep),1), size = 5, color = "darkgreen") +
+  labs(
+    title = "For men"
+   , x = "Days with depression (Last 30 days)"
+   , y = "Percantage of men"
+
+  ) +
+  theme_minimal()
+
+
+t322 <- ds3 %>% select(qlmentl2, sex, sleptim1) %>% 
+  group_by(qlmentl2, sleptim1, sex) %>% 
+  summarise(
+    num = n()
+  ) %>% ungroup() %>% 
+  filter(
+    !is.na(qlmentl2)
+    , !is.na(sleptim1)
+    , sex == "Female"
+  ) %>% group_by(qlmentl2) %>% 
+  mutate(
+    mean_sleep = round(mean(sleptim1), 1)
+  ) %>% ungroup() %>% distinct() %>% 
+  select(qlmentl2, num, mean_sleep) %>% 
+  group_by(qlmentl2, mean_sleep) %>% 
+  summarise(
+    num = sum(num)
+  ) %>% 
+  ungroup() %>%
+  mutate(
+    total = sum(num)
+    , prop = round(num/total, 2)
+  ) 
+
+g32 <- t322 %>% 
+  filter(
+    qlmentl2 != 29
+  ) %>% ggplot(aes(x = qlmentl2, y = prop)) +
+  geom_col() +
+  geom_text(aes(label = mean_sleep), vjust = -1, size = 3) +
+  scale_y_continuous(limits = c(0,0.8), breaks = seq(0,0.8, 0.1 )) +
+  scale_x_continuous(breaks = seq(0,30,5)) +
+  annotate("text", x = mean(range(t322$qlmentl2)), y = 0.4, label = round(mean(t322$mean_sleep),1), size = 5, color = "darkgreen") +
+  labs(
+    title = "For women"
+    , x = "Days with depression (Last 30 days)"
+    , y = "Percantage of women"
+
+  ) +
+  theme_minimal()
+
+g32 + g31
 
 ```
+
+**How sleep time affect of number of fill of energy days?**
+
+```{r}
+#| label: r3-3
+#| code-fold: true
+#| code-summary: Code for Research 3-3
+#| results: markup
+#| warning: false
+
+
+t331 <- ds3 %>% select(qlhlth2, sex, sleptim1) %>% 
+  group_by(qlhlth2, sleptim1, sex) %>% 
+  summarise(
+    num = n()
+  ) %>% ungroup() %>% 
+  filter(
+    !is.na(qlhlth2)
+    , !is.na(sleptim1)
+    , sex == "Male"
+  ) %>% group_by(qlhlth2) %>% 
+  mutate(
+    mean_sleep = round(mean(sleptim1), 1)
+  ) %>% ungroup() %>% distinct() %>% 
+  select(qlhlth2, num, mean_sleep) %>% 
+  group_by(qlhlth2, mean_sleep) %>% 
+  summarise(
+    num = sum(num)
+  ) %>% 
+  ungroup() %>%
+  mutate(
+    total = sum(num)
+    , prop = round(num/total, 2)
+  ) 
+  
+g33 <- t331 %>% ggplot(aes(x = qlhlth2, y = prop)) +
+  geom_col() +
+  geom_text(aes(label = mean_sleep), vjust = -1, size = 2)+
+  scale_y_continuous(limits = c(0,0.5), breaks = seq(0,0.5,0.1))+
+    scale_x_continuous(breaks = seq(0,30,5)) +
+  annotate("text", x = mean(range(t331$qlhlth2)), y = 0.4, label = round(mean(t331$mean_sleep),1), size = 5, color = "darkgreen") +
+  labs(
+    title = "For men"
+    , x = "Days Full Of Energy (last 30)"
+    , y = "Percentage of men"
+  ) +
+  theme_minimal()
+
+
+t332 <- ds3 %>% select(qlhlth2, sex, sleptim1) %>% 
+  group_by(qlhlth2, sleptim1, sex) %>% 
+  summarise(
+    num = n()
+  ) %>% ungroup() %>% 
+  filter(
+    !is.na(qlhlth2)
+    , !is.na(sleptim1)
+    , sex == "Female"
+  ) %>% group_by(qlhlth2) %>% 
+  mutate(
+    mean_sleep = round(mean(sleptim1), 1)
+  ) %>% ungroup() %>% distinct() %>% 
+  select(qlhlth2, num, mean_sleep) %>% 
+  group_by(qlhlth2, mean_sleep) %>% 
+  summarise(
+    num = sum(num)
+  ) %>% 
+  ungroup() %>%
+  mutate(
+    total = sum(num)
+    , prop = round(num/total, 2)
+  ) 
+
+g34 <- t332 %>% 
+   ggplot(aes(x = qlhlth2, y = prop)) +
+  geom_col() +
+  geom_text(aes(label = mean_sleep), vjust = -1, size = 2) +
+  scale_y_continuous(limits = c(0,0.5), breaks = seq(0,0.5, 0.1 )) +
+  scale_x_continuous(breaks = seq(0,30,5)) +
+  annotate("text", x = mean(range(t332$qlhlth2)), y = 0.4, label = round(mean(t332$mean_sleep),1), size = 5, color = "darkgreen") +
+  labs(
+    title = "For women"
+    , x = "Days Full Of Energy (last 30)"
+    , y = "Percentage of women"
+  ) +
+  theme_minimal()
+
+g33 + g34
+
+
+```
+
+How sleep time affect to number of days when you felt anxious? 
+
+```{r}
+#| label: r3-4
+#| code-fold: true
+#| code-summary: Code for Research 3-4
+#| results: markup
+#| warning: false
+
+t331 <- ds3 %>% select(qlstres2, sex, sleptim1) %>% 
+  group_by(qlstres2, sleptim1, sex) %>% 
+  summarise(
+    num = n()
+  ) %>% ungroup() %>% 
+  filter(
+    !is.na(qlstres2)
+    , !is.na(sleptim1)
+    , sex == "Male"
+  ) %>% group_by(qlstres2) %>% 
+  mutate(
+    mean_sleep = round(mean(sleptim1), 1)
+  ) %>% ungroup() %>% distinct() %>% 
+  select(qlstres2, num, mean_sleep) %>% 
+  group_by(qlstres2, mean_sleep) %>% 
+  summarise(
+    num = sum(num)
+  ) %>% 
+  ungroup() %>%
+  mutate(
+    total = sum(num)
+    , prop = round(num/total, 2)
+  ) 
+  
+g33 <- t331 %>% ggplot(aes(x = qlstres2, y = prop)) +
+  geom_col() +
+  geom_text(aes(label = mean_sleep), vjust = -1, size = 2)+
+  scale_y_continuous(limits = c(0,0.5), breaks = seq(0,0.5,0.1))+
+    scale_x_continuous(breaks = seq(0,30,5)) +
+  annotate("text", x = mean(range(t331$qlstres2)), y = 0.4, label = round(mean(t331$mean_sleep),1), size = 5, color = "darkgreen") +
+  labs(
+    title = "For men"
+    , x = "Days felt anxious"
+    , y = "Percentage of men"
+  ) +
+  theme_minimal()
+
+
+t332 <- ds3 %>% select(qlstres2, sex, sleptim1) %>% 
+  group_by(qlstres2, sleptim1, sex) %>% 
+  summarise(
+    num = n()
+  ) %>% ungroup() %>% 
+  filter(
+    !is.na(qlstres2)
+    , !is.na(sleptim1)
+    , sex == "Female"
+  ) %>% group_by(qlstres2) %>% 
+  mutate(
+    mean_sleep = round(mean(sleptim1), 1)
+  ) %>% ungroup() %>% distinct() %>% 
+  select(qlstres2, num, mean_sleep) %>% 
+  group_by(qlstres2, mean_sleep) %>% 
+  summarise(
+    num = sum(num)
+  ) %>% 
+  ungroup() %>%
+  mutate(
+    total = sum(num)
+    , prop = round(num/total, 2)
+  ) 
+
+g34 <- t332  %>% ggplot(aes(x = qlstres2, y = prop)) +
+  geom_col() +
+  geom_text(aes(label = mean_sleep), vjust = -1, size = 2) +
+  scale_y_continuous(limits = c(0,0.5), breaks = seq(0,0.5, 0.1 )) +
+  scale_x_continuous(breaks = seq(0,30,5)) +
+  annotate("text", x = mean(range(t332$qlstres2)), y = 0.4, label = round(mean(t332$mean_sleep),1), size = 5, color = "darkgreen") +
+  labs(
+    title = "For women"
+    , x = "Days felt anxious"
+    , y = "Percentage of women"
+  ) +
+  theme_minimal()
+
+g33 + g34
+```
+
