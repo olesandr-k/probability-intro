@@ -1,0 +1,125 @@
+---
+title: "Exploring the BRFSS data"
+output: 
+  html_document: 
+    fig_height: 4
+    highlight: pygments
+    theme: spacelab
+editor_options: 
+  chunk_output_type: console
+---
+
+## Setup
+
+### Load packages
+
+```{r load-packages, message = FALSE}
+library(ggplot2)
+library(dplyr)
+library(stats)
+library(psycho)
+library(corrplot)
+library(patchwork)
+
+```
+
+### Load data
+
+
+
+```{r load-data}
+file.exists("/Users/muaro/Documents/GitHub/probability-intro/analysis/week4/brfss2013")
+load(file = '/Users/muaro/Documents/GitHub/probability-intro/analysis/week4/brfss2013')
+getwd()
+load("./data-private/raw/intro-prob/brfss2013")
+
+```
+
+------------------------------------------------------------------------
+
+## Part 1: Data
+
+The data is Brfss2013
+------------------------------------------------------------------------
+
+## Part 2: Research questions
+
+**Research quesion 1:**
+What is the relationship between regular exercise (exerany2) and overall life satisfaction (lsatisfy), and general health (genhelth).
+
+**Research quesion 2:**
+Are richer people happier?
+
+People with higher level of income (income2) have their emotional needs fulfilled better. 
+
+**Research quesion 3:**
+Does mental health (qlmentl2, qlstres2, qlhlth2) of men and women (sex) react differently to lack of sleep (sleptim1).
+
+
+------------------------------------------------------------------------
+
+## Part 3: Exploratory data analysis
+
+NOTE: Insert code chunks as needed by clicking on the "Insert a new code chunk" button (green button with orange arrow) above. Make sure that your code is visible in the project you submit. Delete this note when before you submit your work.
+
+```{r}
+
+```
+
+
+## Question 1 - Happy people exercise
+
+What is the relationship between regular exercise (exerany2) and overall life satisfaction (lsatisfy), and general health (genhelth).
+
+
+We hypothesis that people who exercise regularly have higher life satisfacton and better health
+
+
+```{r}
+#| label: r1-1
+#| code-fold: true
+#| code-summary: Code for Research 1-1
+#| results: markup
+#| warning: false
+
+ds1 <- brfss2013 %>% 
+  select(exerany2, lsatisfy, genhlth) 
+
+tableone::CreateTableOne(data = ds1)
+ds1 %>% count(exerany2)
+
+t1 <- 
+  ds1 %>%
+  filter(
+    !is.na(exerany2),
+    !is.na(lsatisfy)
+  ) %>% 
+  group_by( exerany2, lsatisfy) %>% 
+  summarise(
+    n_count = n()
+  ) %>% 
+  group_by(exerany2) %>% 
+  mutate(
+   total = sum(n_count)
+   , prop = n_count/total
+  ) %>% 
+  ungroup() 
+t1 %>% ggplot(aes(x = lsatisfy, y = prop, fill = exerany2)) +
+  geom_col(position = position_dodge2(preserve = "single", padding = ), alpha = 0.5) +
+  geom_text(aes(label = scales::percent(prop), color = exerany2))
+
+t1
+```
+
+
+**Research quesion 2:**
+
+```{r}
+
+```
+
+**Research quesion 3:**
+
+```{r}
+
+```
