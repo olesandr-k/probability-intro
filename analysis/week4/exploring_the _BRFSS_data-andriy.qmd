@@ -28,11 +28,8 @@ library(patchwork)
 
 
 ```{r load-data}
-file.exists("/Users/muaro/Documents/GitHub/probability-intro/analysis/week4/brfss2013")
-load(file = '/Users/muaro/Documents/GitHub/probability-intro/analysis/week4/brfss2013')
-getwd()
 load("./data-private/raw/intro-prob/brfss2013")
-
+ds0 <- brfss2013
 ```
 
 ------------------------------------------------------------------------
@@ -41,6 +38,29 @@ load("./data-private/raw/intro-prob/brfss2013")
 
 The data is Brfss2013
 ------------------------------------------------------------------------
+
+```{r}
+ds0 %>% count(dispcode)
+
+ds0 %>% dim() # 330 columns, too many to display
+ds0[,1:10] %>% glimpse() 
+# rely on the supplied codebook to interpret the columns
+# What is the row in this data set? What's the grain?
+ds0 %>% 
+  # filter(dispcode == "Completed interview") %>% 
+  summarize(
+    row_count = n()
+    ,id_count = n_distinct(seqno, X_psu,idate)
+  )
+
+ds0 %>% select(seqno) %>% explore::describe_all()
+
+ds0 %>% group_by(seqno) %>% count() %>% 
+  filter(n>1)
+
+ds0 %>% filter(seqno==2013000001) %>% View()
+```
+
 
 ## Part 2: Research questions
 
@@ -69,10 +89,10 @@ NOTE: Insert code chunks as needed by clicking on the "Insert a new code chunk" 
 
 ## Question 1 - Happy people exercise
 
-What is the relationship between regular exercise (exerany2) and overall life satisfaction (lsatisfy), and general health (genhelth).
+> RESEARCH QUESTION 1 - What is the relationship between regular exercise (exerany2), overall life satisfaction (lsatisfy), and general health (genhelth).
 
 
-We hypothesis that people who exercise regularly have higher life satisfacton and better health
+We hypothesize that people who exercise regularly have higher life satisfaction and better health
 
 
 ```{r}
@@ -82,11 +102,28 @@ We hypothesis that people who exercise regularly have higher life satisfacton an
 #| results: markup
 #| warning: false
 
-ds1 <- brfss2013 %>% 
+# let's create a data set that would help us focus and explore the variables of interest.
+ds1 <- 
+  brfss2013 %>% 
   select(exerany2, lsatisfy, genhlth) 
-
+ds1 %>% labelled::look_for()
 tableone::CreateTableOne(data = ds1)
+# 
+#   mutate(across(where(is.factor), ~ forcats::fct_explicit_na(.x, na_level = "NA")))
+
+
 ds1 %>% count(exerany2)
+
+ds1 %>% labelled::look_for()
+table(ds1$exerany2, ds1$lsatisfy)
+
+source("./analysis/week4/binary-categorical-functions.R")
+ds1 %>% make_bi_freq_table("exerany2")
+ds1 %>% make_bi_freq_table("exerany2","lsatisfy")
+
+ds1 %>% make_bi_freq_graph("exerany2",)
+ds1 %>% run_contingency("exerany2","lsatisfy")
+
 
 t1 <- 
   ds1 %>%
