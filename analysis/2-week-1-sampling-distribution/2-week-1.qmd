@@ -95,7 +95,7 @@ ds0 %>%
 
 library(dplyr)
 
-convert_and_summarise <- function(data, var) {
+custom_summary <- function(data, var) {
   
   
   data %>% 
@@ -112,7 +112,7 @@ convert_and_summarise <- function(data, var) {
 }
 
 # Example usage:
- ds0 %>% convert_and_summarise(area_m)
+ ds0 %>% custom_summary(area_m)
 
 ```
 
@@ -138,7 +138,7 @@ hist_plot <- ds0 %>%
 
 cowplot::plot_grid(hist_plot, box_plot, ncol = 1, align = "v")
 
-ds0 %>% convert_and_summarise(area)
+ds0 %>% custom_summary(area)
 
 ```
 
@@ -201,8 +201,9 @@ In this lab we have access to the entire population, but this is rarely the case
 If we were interested in estimating the mean living area in Ames based on a sample, we can use the following command to survey the population.
 
 ```{r samp1}
-samp1 <- ames %>%
-  sample_n(size = 50)
+samp1 <- ds0 %>%
+  sample_n(size = 50) %>% 
+ glimpse()
 ```
 
 This command collects a simple random sample of `size` 50 from the `ames` dataset, which is assigned to `samp1`. This is like going into the City Assessor's database and pulling up the files on 50 random home sales. Working with these 50 files would be considerably simpler than working with all 2930 home sales.
@@ -212,9 +213,59 @@ This command collects a simple random sample of `size` 50 from the `ames` datase
 :::
 
 ```{r samp1-dist}
+library(rlang)
 # type your code for the Exercise here, and Run Document
+custom_summary(samp1, area) 
+custom_summary(ds0, area)
+
+custom_summary <- function(data, var) {
+  
+  
+  data %>% 
+    summarise(
+      mean = mean({{var}}, na.rm = TRUE)
+      ,median = median({{var}}, na.rm = TRUE)
+      ,sd = sd({{var}}, na.rm = TRUE)
+      ,iqr = IQR({{var}}, na.rm = TRUE)
+      ,min = min({{var}}, na.rm = TRUE)
+      ,max = max({{var}}, na.rm = TRUE)
+      ,q1 = quantile({{var}},0.25,  na.rm = TRUE)
+      ,q3 = quantile({{var}},0.75,  na.rm = TRUE)
+    ) %>% 
+    mutate(
+      var_name = as_string(ensym(var))
+    ) %>% 
+    relocate("var_name")
+}
+
+custom_summary(ds0, price)
+
 
 ```
+
+```{r}
+custom_summary(samp1, area) 
+custom_summary(ds0, area)
+custom_summary(samp1, price) 
+custom_summary(ds0, price)
+
+ls_summary <- list(
+   custom_summary(samp1, area) %>% mutate(source = "sample")
+   , custom_summary(samp1, price)%>% mutate(source = "sample")
+   , custom_summary(ds0, area)%>% mutate(source = "population")
+   , custom_summary(ds0, price)%>% mutate(source = "population")
+)  
+
+ls_summary
+
+ds_summary <- ls_summary %>% 
+  bind_rows() %>% relocate("source", .after = "var_name")
+
+ds_summary
+
+```
+
+
 
 If we're interested in estimating the average living area in homes in Ames using the sample, our best single guess is the sample mean.
 
