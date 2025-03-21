@@ -58,7 +58,6 @@ ds0 %>% glimpse
 
 ```
 
-
 We can explore the distribution of areas of homes in the population of home sales visually and with summary statistics. Let's first create a visualization, a histogram:
 
 ```{r area-hist}
@@ -74,7 +73,6 @@ ds0 %>%
 
 
 ```
-
 
 Let's also obtain some summary statistics. Note that we can do this using the `summarise` function. We can calculate as many statistics as we want using this function, and just string along the results. Some of the functions below should be self explanatory (like `mean`, `median`, `sd`, `IQR`, `min`, and `max`). A new function here is the `quantile` function which we can use to calculate values corresponding to specific percentile cutoffs in the distribution. For example `quantile(x, 0.25)` will yield the cutoff value for the 25th percentile (Q1) in the distribution of x. Finding these values are useful for describing the distribution, as we can use them for descriptions like *"the middle 50% of the homes have areas between such and such square feet"*.
 
@@ -118,24 +116,60 @@ convert_and_summarise <- function(data, var) {
 
 ```
 
+A good way to display a summary of a continues unimodal variable is a boxplot, which relays similar information as histogram but also provides some useful point estimate.
+
+```{r}
+library(cowplot)
+
+
+box_plot <- ds0 %>% 
+  ggplot(aes(x = area)) +
+  geom_boxplot() + 
+  theme_minimal()
+
+
+
+hist_plot <- ds0 %>% 
+  ggplot(aes(x = area)) +
+  geom_histogram() + 
+  theme_minimal()
+
+
+
+cowplot::plot_grid(hist_plot, box_plot, ncol = 1, align = "v")
+
+ds0 %>% convert_and_summarise(area)
+
+
+```
+
+![Anatomy of Boxplot](https://r-graph-gallery.com/img/other/boxplot_explanation.png)
 
 1.  Which of the following is **false**?
 
     <ol>
 
-    <li>The distribution of areas of houses in Ames is unimodal and right-skewed.</li> T 
+    <li>The distribution of areas of houses in Ames is unimodal and right-skewed.</li>
 
-    <li>50% of houses in Ames are smaller than 1,499.69 square feet.</li> F
+    T
 
-    <li>The middle 50% of the houses range between approximately 1,126 square feet and 1,742.7 square feet.</li> T
+    <li>50% of houses in Ames are smaller than 1,499.69 square feet.</li>
 
-    <li>The IQR is approximately 616.7 square feet.</li> T
+    F
 
-    <li>The smallest house is 334 square feet and the largest is 5,642 square feet.</li> T
+    <li>The middle 50% of the houses range between approximately 1,126 square feet and 1,742.7 square feet.</li>
+
+    T
+
+    <li>The IQR is approximately 616.7 square feet.</li>
+
+    T
+
+    <li>The smallest house is 334 square feet and the largest is 5,642 square feet.</li>
+
+    T
 
     </ol>
-    
-    
 
 ## The unknown sampling distribution
 
