@@ -34,43 +34,108 @@ We consider real estate data from the city of Ames, Iowa. The details of every r
 
 ```{r load-data}
 data(ames)
+
+ames %>% dim()
 ```
 
 We see that there are quite a few variables in the data set, enough to do a very in-depth analysis. For this lab, we'll restrict our attention to just two of the variables: the above ground living area of the house in square feet (`area`) and the sale price (`price`).
 
+```{r}
+
+convert_sqft_to_sqm <- function(square_feet) {
+  square_meters <- square_feet * 0.092903
+  return(square_meters)
+}
+
+ds0 <- ames %>% 
+  select(area, price) %>% 
+  mutate(
+    area_m = convert_sqft_to_sqm(area)
+  )
+
+ds0 %>% glimpse
+
+
+```
+
+
 We can explore the distribution of areas of homes in the population of home sales visually and with summary statistics. Let's first create a visualization, a histogram:
 
 ```{r area-hist}
-ggplot(data = ames, aes(x = area)) +
-  geom_histogram(binwidth = 250)
+ggplot(data = ds0, aes(x = area_m)) +
+  geom_histogram(binwidth = 10)
 ```
+
+```{r}
+ds0 %>% 
+  ggplot(aes(x = price)) + 
+  geom_histogram() +
+  scale_x_continuous(labels = scales::comma_format())
+
+
+```
+
 
 Let's also obtain some summary statistics. Note that we can do this using the `summarise` function. We can calculate as many statistics as we want using this function, and just string along the results. Some of the functions below should be self explanatory (like `mean`, `median`, `sd`, `IQR`, `min`, and `max`). A new function here is the `quantile` function which we can use to calculate values corresponding to specific percentile cutoffs in the distribution. For example `quantile(x, 0.25)` will yield the cutoff value for the 25th percentile (Q1) in the distribution of x. Finding these values are useful for describing the distribution, as we can use them for descriptions like *"the middle 50% of the homes have areas between such and such square feet"*.
 
 ```{r area-stats}
-ames %>%
-  summarise(mu = mean(area), pop_med = median(area), 
-            sigma = sd(area), pop_iqr = IQR(area),
-            pop_min = min(area), pop_max = max(area),
-            pop_q1 = quantile(area, 0.25),  # first quartile, 25th percentile
-            pop_q3 = quantile(area, 0.75))  # third quartile, 75th percentile
+ds0 %>%
+  summarise(mu = mean(area_m), pop_med = median(area_m), 
+            sigma = sd(area_m), pop_iqr = IQR(area_m),
+            pop_min = min(area_m), pop_max = max(area_m),
+            pop_q1 = quantile(area_m, 0.25),  # first quartile, 25th percentile
+            pop_q3 = quantile(area_m, 0.75), pop_q3 = quantile(area_m, 0.5))  # third quartile, 75th percentile
+
+
+
+
 ```
+
+```{r}
+#| code-fold: true 
+#| code-summary: store custome summary in a function 
+
+library(dplyr)
+
+convert_and_summarise <- function(data, var) {
+  
+  
+  data %>% 
+    summarise(
+      mu = mean({{var}}, na.rm = TRUE)
+      ,pop_med = median({{var}}, na.rm = TRUE)
+      ,sigma = sd({{var}}, na.rm = TRUE)
+      ,pop_iqr = IQR({{var}}, na.rm = TRUE)
+      ,pop_min = min({{var}}, na.rm = TRUE)
+      ,pop_max = max({{var}}, na.rm = TRUE)
+      ,pop_q1 = quantile({{var}},0.25,  na.rm = TRUE)
+      ,pop_q3 = quantile({{var}},0.75,  na.rm = TRUE)
+    )
+}
+
+# Example usage:
+ ds0 %>% convert_and_summarise(area_m)
+
+```
+
 
 1.  Which of the following is **false**?
 
     <ol>
 
-    <li>The distribution of areas of houses in Ames is unimodal and right-skewed.</li>
+    <li>The distribution of areas of houses in Ames is unimodal and right-skewed.</li> T 
 
-    <li>50% of houses in Ames are smaller than 1,499.69 square feet.</li>
+    <li>50% of houses in Ames are smaller than 1,499.69 square feet.</li> F
 
-    <li>The middle 50% of the houses range between approximately 1,126 square feet and 1,742.7 square feet.</li>
+    <li>The middle 50% of the houses range between approximately 1,126 square feet and 1,742.7 square feet.</li> T
 
-    <li>The IQR is approximately 616.7 square feet.</li>
+    <li>The IQR is approximately 616.7 square feet.</li> T
 
-    <li>The smallest house is 334 square feet and the largest is 5,642 square feet.</li>
+    <li>The smallest house is 334 square feet and the largest is 5,642 square feet.</li> T
 
     </ol>
+    
+    
 
 ## The unknown sampling distribution
 
