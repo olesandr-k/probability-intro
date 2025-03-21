@@ -140,10 +140,33 @@ cowplot::plot_grid(hist_plot, box_plot, ncol = 1, align = "v")
 
 ds0 %>% convert_and_summarise(area)
 
+```
+
+
+
+![Anatomy of Boxplot](https://r-graph-gallery.com/img/other/boxplot_explanation.png)
+```{r}
+
+box_plot <- ds0 %>% 
+  ggplot(aes(x = price)) +
+  geom_boxplot() + 
+  scale_x_continuous(label = scales::comma_format()) +
+  theme_minimal()
+
+
+
+hist_plot <- ds0 %>% 
+  ggplot(aes(x = price)) +
+  geom_histogram()+
+  scale_x_continuous(label = scales::comma_format()) +
+  theme_minimal()
+
+cowplot::plot_grid(hist_plot, box_plot, ncol = 1, align = "v")
+
 
 ```
 
-![Anatomy of Boxplot](https://r-graph-gallery.com/img/other/boxplot_explanation.png)
+
 
 1.  Which of the following is **false**?
 
