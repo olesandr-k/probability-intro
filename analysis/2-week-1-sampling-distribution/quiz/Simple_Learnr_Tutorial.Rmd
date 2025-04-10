@@ -1,0 +1,43 @@
+
+---
+title: "Simple Learnr Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+```
+
+## Introduction
+
+Welcome to this simple interactive tutorial. Let's test your knowledge with a couple of questions!
+
+## Question 1
+
+What is the capital of France?
+
+```{r question-1, echo=FALSE}
+quiz(
+  question("What is the capital of France?",
+    answer("Lyon", correct = FALSE),
+    answer("Paris", correct = TRUE),
+    answer("Marseille", correct = FALSE)
+  )
+)
+```
+
+## Question 2
+
+Select the correct mathematical expression for calculating the area of a rectangle.
+
+```{r question-2, echo=FALSE}
+quiz(
+  question("Select the correct formula for the area of a rectangle.",
+    answer("Length + Width", correct = FALSE),
+    answer("Length x Width", correct = TRUE),
+    answer("Length / Width", correct = FALSE),
+    answer("2 x (Length + Width)", correct = FALSE)
+  )
+)
+```

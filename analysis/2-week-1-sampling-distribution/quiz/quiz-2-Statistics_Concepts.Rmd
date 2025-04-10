@@ -1,0 +1,91 @@
+---
+title: "Statistics Concepts Quiz"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Statistics Concepts Quiz
+
+This quiz will test your understanding of various statistical concepts.
+
+## Question 1: Population & Sample Concepts
+
+```{r question-1, echo=FALSE}
+library(learnr)
+question_text("Match each term to its definition.",
+  answer_text("Population", correct = "The entire group you're studying or generalizing to"),
+  answer_text("Sample", correct = "A subset of individuals selected for analysis"),
+  answer_text("Parameter", correct = "A fixed numerical value that describes the full population"),
+  answer_text("Statistic", correct = "A numerical summary calculated from a subset of data"),
+  allow_retry = TRUE
+)
+
+```
+
+## Question 2: Distributions
+
+```{r question-2, echo=FALSE}
+question_text("Match each term to its definition.",
+  answer_text("Sampling Distribution", correct = "The distribution of a statistic (like the mean) from many repeated samples"),
+  answer_text("Empirical Distribution", correct = "A distribution based on observed data or simulation"),
+  answer_text("Theoretical Distribution", correct = "A mathematical model describing how a variable behaves ideally"),
+  answer_text("Distribution", correct = "A general term for how values are spread in a dataset"),
+  allow_retry = TRUE
+)
+
+```
+
+## Question 3: Measures of Center & Spread
+
+```{r question-3, echo=FALSE}
+question_text("Match each term to its definition.",
+  answer_text("Mean", correct = "The average of a set of values"),
+  answer_text("Standard Deviation", correct = "A measure of how spread out values are around the mean"),
+  answer_text("Variance", correct = "The square of the standard deviation"),
+  answer_text("Standard Error", correct = "The standard deviation of the sampling distribution of a statistic"),
+  allow_retry = TRUE
+)
+```
+
+## Question 4: Central Limit Theorem Concepts
+
+```{r question-4, echo=FALSE}
+question_text("Match each term to its definition.",
+  answer_text("Central Limit Theorem", correct = "Describes how the distribution of sample means becomes normal as sample size increases"),
+  answer_text("Skewed Distribution", correct = "A distribution that is not symmetric (e.g., has a long tail on one side)"),
+  answer_text("Normal Distribution", correct = "A distribution that is bell-shaped and symmetric"),
+  allow_retry = TRUE
+)
+
+```
+
+## Question 5: Simulation Concepts
+
+```{r question-5, echo=FALSE}
+question_text("Match each term to its definition.",
+  answer_text("Sample Size", correct = "The number of individual observations in a single sample"),
+  answer_text("Number of Samples", correct = "The total number of samples generated for a simulation"),
+  answer_text("Repetition / Replication", correct = "Repeating the sampling process multiple times"),
+  answer_text("With Replacement", correct = "Sampling method where items can appear more than once"),
+  allow_retry = TRUE
+)
+
+```
+
+## Question 6: Estimation Concepts
+
+```{r question-6, echo=FALSE}
+question_text("Match each term to its definition.",
+  answer_text("Sampling Variability", correct = "The natural variation in a statistic across repeated samples"),
+  answer_text("Law of Large Numbers", correct = "The tendency for larger samples to better estimate the population"),
+  answer_text("Bias", correct = "A consistent error in estimating a population value"),
+  answer_text("Precision", correct = "The closeness of repeated estimates to one another"),
+  allow_retry = TRUE
+)
+
+```

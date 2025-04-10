@@ -71,6 +71,7 @@ ames %>%
             pop_min = min(area), pop_max = max(area),
             pop_q1 = quantile(area, 0.25),  # first quartile, 25th percentile
             pop_q3 = quantile(area, 0.75))  # third quartile, 75th percentile
+# consider formatting the code to be more dev-friendly
 ```
 
 ```{r}
@@ -100,7 +101,7 @@ ames %>% custom_summarize(area)
 ames %>% custom_summarize(price)
 ```
 
-A good way to display summary of continuous, unimodal variables is a boxplot, which relays similar information as histogram, but is more specific statistically.
+A good way to display summary of continuous, unimodal variables is a boxplot, which relays similar information as histogram, but also provides some useful point estimates.
 
 ```{r}
 #| code-fold: true
@@ -125,8 +126,6 @@ combined_plot
 ```
 
 ![Anatomy of a boxplot](https://r-graph-gallery.com/img/other/boxplot_explanation.png)
-
-[![Anatomy of a boxplot](https://r-graph-gallery.com/img/other/boxplot_explanation.png)](https://r-graph-gallery.com/boxplot.html)
 
 The boxplot gallery ([link](https://r-graph-gallery.com/boxplot.html)) offer more ideas of using this graph in EDA.
 
@@ -153,7 +152,7 @@ combined_plot <- cowplot::plot_grid(
 combined_plot
 ```
 
-1.  Which of the following is **false**?
+Q1.  Which of the following is **false**?
 
     <ol>
 
@@ -186,9 +185,35 @@ This command collects a simple random sample of `size` 50 from the `ames` datase
 **Exercise**: Describe the distribution of this sample? How does it compare to the distribution of the population? **Hint:** `sample_n` function takes a random sample of observations (i.e. rows) from the dataset, you can still refer to the variables in the dataset with the same names. Code you used in the previous exercise will also be helpful for visualizing and summarizing the sample, however be careful to not label values `mu` and `sigma` anymore since these are sample statistics, not population parameters. You can customize the labels of any of the statistics to indicate that these come from the sample.
 :::
 
+```{r}
+#| code-summary: Modify `custom_summary()` to be more generic
+
+# our previous custom_summarize() baked in the names of the estimates to represent the population. Let's generalize, so we can use either sample or population with this summary function
+
+library(rlang)
+custom_summarize <- function(data, var) {
+  data %>%
+    summarise(
+      varname = as_string(ensym(var)), # prints var as string
+      mean = mean({{ var }}, na.rm = TRUE),
+      median = median({{ var }}, na.rm = TRUE),
+      sd = sd({{ var }}, na.rm = TRUE),
+      iqr = IQR({{ var }}, na.rm = TRUE),
+      min = min({{ var }}, na.rm = TRUE),
+      max = max({{ var }}, na.rm = TRUE),
+      q1 = quantile({{ var }}, 0.25, na.rm = TRUE),  # 25th percentile
+      q3 = quantile({{ var }}, 0.75, na.rm = TRUE)   # 75th percentile
+    )
+}
+# how to use
+# ds0 %>% custom_summarize(price) # notice NSE for variable
+
+```
+
 ```{r samp1-dist}
 # type your code for the Exercise here, and Run Document
-
+samp1 %>% custom_summarize(area)
+samp1 %>% custom_summarize(price)
 ```
 
 If we're interested in estimating the average living area in homes in Ames using the sample, our best single guess is the sample mean.
@@ -196,11 +221,26 @@ If we're interested in estimating the average living area in homes in Ames using
 ```{r mean-samp1}
 samp1 %>%
   summarise(x_bar = mean(area))
+
+ls_summary <- list(
+   ames %>% custom_summarize(area)  %>% mutate(source="population")
+  ,ames %>% custom_summarize(price) %>% mutate(source="population")
+  ,samp1 %>% custom_summarize(area) %>% mutate(source="sample")
+  ,samp1 %>% custom_summarize(price)%>% mutate(source="sample")
+)
+
+ls_summary %>% bind_rows() %>% relocate("source")
+ds_summary <- ls_summary %>% bind_rows() %>% relocate("source")
 ```
 
 Depending on which 50 homes you selected, your estimate could be a bit above or a bit below the true population mean of 1,499.69 square feet. In general, though, the sample mean turns out to be a pretty good estimate of the average living area, and we were able to get it by sampling less than 3% of the population.
+```{r}
+# how many percent from pop is in our sample? 
+scales::percent(50/nrow(ames),accuracy=.01)
+```
 
-2.  Suppose we took two more samples, one of size 100 and one of size 1000. Which would you think would provide a more accurate estimate of the population mean?
+
+Q2.  Suppose we took two more samples, one of size 100 and one of size 1000. Which would you think would provide a more accurate estimate of the population mean?
 
     <ol>
 
@@ -223,9 +263,14 @@ ames %>%
 Not surprisingly, every time we take another random sample, we get a different sample mean. It's useful to get a sense of just how much variability we should expect when estimating the population mean this way. The distribution of sample means, called the *sampling distribution*, can help us understand this variability. In this lab, because we have access to the population, we can build up the sampling distribution for the sample mean by repeating the above steps many times. Here we will generate 15,000 samples and compute the sample mean of each. Note that we are sampling with replacement, `replace = TRUE` since sampling distributions are constructed with sampling with replacement.
 
 ```{r loop}
-sample_means50 <- ames %>%
-                    rep_sample_n(size = 50, reps = 15000, replace = TRUE) %>%
-                    summarise(x_bar = mean(area))
+sample_means50 <- 
+  ames %>% select(area, price) %>% 
+  statsr::rep_sample_n( #print the function to examine
+    size = 50
+    , reps = 15000 # number of groups
+    , replace = TRUE
+  ) %>% # notice that it returns a grouped dataset
+  summarise(x_bar = mean(area))
 
 ggplot(data = sample_means50, aes(x = x_bar)) +
   geom_histogram(binwidth = 20)
@@ -241,7 +286,13 @@ Here we use R to take 15,000 samples of size 50 from the population, calculate t
 
 ```{r sampling-dist}
 # type your code for the Exercise here, and Run Document
-
+nrow(sample_means50)
+sample_means50 %>% custom_summarize(x_bar)
+# its sd is the standard error = standard deviation in the distribution of sample means
+standar_error <- 
+  (ds_summary %>% filter(source=="population",varname=="area") %>% pull(sd))
+  /
+  sqrt(50)
 ```
 
 ## 3. Interlude: Sampling distributions

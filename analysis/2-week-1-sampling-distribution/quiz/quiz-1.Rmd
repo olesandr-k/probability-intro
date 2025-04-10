@@ -1,0 +1,28 @@
+---
+title: "Quiz: Sampling Distributions"
+output: learnr::tutorial
+runtime: shiny_prerendered
+tutorial:
+  id: sampling-distribution-quiz
+  name: Sampling Distribution Quiz
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+```
+
+## Q1
+
+```{r q1, echo=F}
+
+question("What is a sampling distribution?",
+         answer("A histogram of values in the population"),
+         answer("A distribution of repeated sample means from the same population", correct = TRUE),
+         answer("A single sample taken from the population"),
+         answer("The distribution of standard deviations across different datasets"),
+         correct = "A sampling distribution is formed by repeatedly taking samples of the same size and calculating a statistic like the mean.",
+         allow_retry = TRUE
+)
+
+```
+

@@ -1,0 +1,87 @@
+---
+title: "Quiz: Sampling Distributions"
+output: learnr::tutorial
+runtime: shiny_prerendered
+tutorial:
+  id: sampling-distribution-quiz
+  name: Sampling Distribution Quiz
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Sampling Distributions Quiz
+
+This quiz will test your understanding of sampling distributions and related concepts.
+
+## Question 1: What is a sampling distribution?
+
+```{r question-1, echo=FALSE}
+question("What is a sampling distribution?",
+  answer("A histogram of values in the population"),
+  answer("A distribution of repeated sample means from the same population", correct = TRUE),
+  answer("A single sample taken from the population"),
+  answer("The distribution of standard deviations across different datasets"),
+  correct = "A sampling distribution is formed by repeatedly taking samples of the same size and calculating a statistic like the mean.",
+  allow_retry = TRUE
+)
+
+```
+
+## Question 2: According to the Central Limit Theorem (CLT), what will the sampling distribution of the sample mean be?
+
+```{r question-2, echo=FALSE}
+question("According to the Central Limit Theorem (CLT), the sampling distribution of the sample mean will be approximately normal if:",
+  answer("The population is normal"),
+  answer("The sample size is small"),
+  answer("The population is skewed but the sample size is large", correct = TRUE),
+  answer("The samples are taken with replacement"),
+  correct = "With large enough sample size, the sampling distribution of the mean is approximately normal regardless of population shape.",
+  allow_retry = TRUE
+)
+
+```
+
+## Question 3: As the sample size increases, what happens to the standard error (SE) of the sample mean?
+
+```{r question-3, echo=FALSE}
+question("As the sample size *n* increases, what happens to the standard error (SE) of the sample mean?",
+  answer("It stays the same"),
+  answer("It increases"),
+  answer("It decreases", correct = TRUE),
+  answer("It becomes equal to the population standard deviation"),
+  correct = "The SE = population SD / sqrt(n), so increasing n reduces SE.",
+  allow_retry = TRUE
+)
+
+```
+
+## Question 4: If the original population is heavily skewed, what happens to the distribution of the sample mean?
+
+```{r question-4, echo=FALSE}
+question("If the original population is heavily skewed, what happens to the distribution of the sample mean as you increase the sample size?",
+  answer("It stays skewed"),
+  answer("It becomes more normal", correct = TRUE),
+  answer("It becomes bimodal"),
+  answer("It becomes uniform"),
+  correct = "The CLT shows that the sample mean's distribution becomes more normal as n increases, even if the original population is skewed.",
+  allow_retry = TRUE
+)
+ 
+```
+
+## Question 5: Why do we simulate multiple samples when studying sampling distributions?
+
+```{r question-5, echo=FALSE}
+question("Why do we simulate multiple samples when studying sampling distributions?",
+  answer("To generate outliers"),
+  answer("To compare population and sample distributions"),
+  answer("To see how much sample means vary from sample to sample", correct = TRUE),
+  answer("To increase the sample size artificially"),
+  correct = "The goal is to observe the variation across samples — that's the whole point of a sampling distribution.",
+  allow_retry = TRUE
+)
+
+```

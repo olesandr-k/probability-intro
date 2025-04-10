@@ -1,0 +1,318 @@
+---
+title: "Sampling Distributions: Exam Simulation"
+format: revealjs
+editor: visual
+---
+
+## Overview
+
+This activity simulates an examination on a selected topic in undergraduate statistics course at a typical North American university.
+
+------------------------------------------------------------------------
+
+### Activity Structure
+
+Total points possible: 60 points 
+
+1.  Quick Review Questions (MCQs) ( 10 points)\
+2.  Matching Terms to Definitions (23 points)\
+3.  Key Formulas with Plain-English Descriptions (25)\
+
+2 points are given for showing up. 
+
+------------------------------------------------------------------------
+
+## 1. Quick Review Questions
+
+Total points possible: 10 pts Each quesion is worth: 2 pts
+
+### Q1: What is a sampling distribution?
+
+-   A. A histogram of values in the population\
+-   B. A distribution of repeated sample means\
+-   C. A single sample from the population\
+-   D. The distribution of standard deviations
+
+------------------------------------------------------------------------
+
+## 1. Quick Review Questions
+
+### Q1: What is a sampling distribution?
+
+-   A. A histogram of values in the population\
+-   
+    B.  ✅ A distribution of repeated sample means\
+-   C. A single sample from the population\
+-   D. The distribution of standard deviations
+
+**Explanation:** It's the distribution of a statistic (like the mean) across many samples.
+
+------------------------------------------------------------------------
+
+### Q2: When does the CLT apply?
+
+-   A. The population is normal\
+-   B. The sample size is small\
+-   C. The population is skewed but n is large\
+-   D. Sampling is with replacement
+
+------------------------------------------------------------------------
+
+### Q2: When does the CLT apply?
+
+-   A. The population is normal\
+-   B. The sample size is small\
+-   C. ✅ The population is skewed but n is large\
+-   D. Sampling is with replacement
+
+------------------------------------------------------------------------
+
+### Q3: As sample size increases, what happens to SE?
+
+-   A. It stays the same\
+-   B. It increases\
+-   C. It decreases\
+-   D. It equals the population SD
+
+------------------------------------------------------------------------
+
+### Q3: As sample size increases, what happens to SE?
+
+-   A. It stays the same\
+-   B. It increases\
+-   C. ✅ It decreases\
+-   D. It equals the population SD
+
+------------------------------------------------------------------------
+
+### Q4: If the population is skewed...
+
+What happens to the distribution of sample means as n increases?
+
+-   A. It stays skewed\
+-   B. It becomes more normal\
+-   C. It becomes bimodal\
+-   D. It becomes uniform
+
+------------------------------------------------------------------------
+
+### Q4: If the population is skewed...
+
+What happens to the distribution of sample means as n increases?
+
+-   A. It stays skewed\
+-   B. ✅ It becomes more normal\
+-   C. It becomes bimodal\
+-   D. It becomes uniform
+
+------------------------------------------------------------------------
+
+### Q5: Why simulate multiple samples?
+
+-   A. To generate outliers\
+-   B. To compare distributions\
+-   C. To see variability in sample means\
+-   D. To boost sample size artificially
+
+------------------------------------------------------------------------
+
+### Q5: Why simulate multiple samples?
+
+-   A. To generate outliers\
+-   B. To compare distributions\
+-   C. ✅ To see variability in sample means\
+-   D. To boost sample size artificially
+
+------------------------------------------------------------------------
+
+## 2. Matching Review
+
+Total points possible: 23 pts Getting one item correct is worth: 1 pts
+
+### Population & Sample Concepts
+
+-   **Population**\
+-   **Sample**\
+-   **Parameter**\
+-   **Statistic**
+
+------------------------------------------------------------------------
+
+### Population & Sample Concepts
+
+-   **Population**: All individuals of interest\
+-   **Sample**: Subset taken for analysis\
+-   **Parameter**: A fixed value describing the population\
+-   **Statistic**: Value calculated from a sample
+
+------------------------------------------------------------------------
+
+### Distributions
+
+-   **Distribution**\
+-   **Empirical Distribution**\
+-   **Theoretical Distribution**\
+-   **Sampling Distribution**
+
+------------------------------------------------------------------------
+
+### Distributions
+
+-   **Distribution**: Spread of a variable\
+-   **Empirical Distribution**: Based on observed data\
+-   **Theoretical Distribution**: Mathematical model (e.g., normal)\
+-   **Sampling Distribution**: Spread of a statistic over many samples
+
+------------------------------------------------------------------------
+
+### Center & Spread
+
+-   **Mean**\
+-   **Standard Deviation**\
+-   **Variance**\
+-   **Standard Error**
+
+------------------------------------------------------------------------
+
+### Center & Spread
+
+-   **Mean**: The average\
+-   **Standard Deviation**: Spread around the mean\
+-   **Variance**: SD squared\
+-   **Standard Error**: SD of the sample mean distribution
+
+------------------------------------------------------------------------
+
+### CLT Concepts
+
+-   **CLT**\
+-   **Skewed Distribution**\
+-   **Normal Distribution**
+
+------------------------------------------------------------------------
+
+### CLT Concepts
+
+-   **CLT**: Sample means become normal as n increases\
+-   **Skewed Distribution**: Not symmetric\
+-   **Normal Distribution**: Bell-shaped and symmetric
+
+------------------------------------------------------------------------
+
+### Simulation Vocabulary
+
+-   **Sample Size (n)**\
+-   **Number of Samples**\
+-   **Repetition**\
+-   **With Replacement**
+
+------------------------------------------------------------------------
+
+### Simulation Vocabulary
+
+-   **Sample Size (n)**: Number of observations in a sample\
+-   **Number of Samples**: Total samples simulated\
+-   **Repetition**: Drawing many samples\
+-   **With Replacement**: Items can be re-selected
+
+------------------------------------------------------------------------
+
+### Estimation Concepts
+
+-   **Sampling Variability**\
+-   **Law of Large Numbers**\
+-   **Bias**\
+-   **Precision**
+
+------------------------------------------------------------------------
+
+### Estimation Concepts
+
+-   **Sampling Variability**: How much estimates vary\
+-   **Law of Large Numbers**: Bigger samples ≈ better estimates\
+-   **Bias**: Systematic error\
+-   **Precision**: How tight estimates cluster
+
+------------------------------------------------------------------------
+
+## 3. Key Formulas
+
+Total points possible: 25 pts Each formula is worth: 5 pts
+
+### Sample Mean
+
+*Add values in the sample, divide by how many there are.*
+
+------------------------------------------------------------------------
+
+### Sample Mean
+
+$$
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
+$$
+
+*Add values in the sample, divide by how many there are.*
+
+------------------------------------------------------------------------
+
+### Sample Standard Deviation
+
+*Measures how spread out your sample values are.*
+
+------------------------------------------------------------------------
+
+### Sample Standard Deviation
+
+$$
+s = \sqrt{\frac{1}{n - 1} \sum_{i=1}^{n} (x_i - \bar{x})^2}
+$$
+
+*Measures how spread out your sample values are.*
+
+------------------------------------------------------------------------
+
+### Standard Error
+
+*How much your sample mean varies from sample to sample.*
+
+------------------------------------------------------------------------
+
+### Standard Error
+
+$$
+SE = \frac{s}{\sqrt{n}}
+$$
+
+*How much your sample mean varies from sample to sample.*
+
+------------------------------------------------------------------------
+
+### CLT Statement
+
+## *As n increases, sample means become normally distributed.*
+
+### CLT Statement
+
+$$
+\bar{x} \sim \mathcal{N}(\mu, \frac{\sigma^2}{n})
+$$
+
+*As n increases, sample means become normally distributed.*
+
+------------------------------------------------------------------------
+
+### Variance of Sample Mean
+
+*The variability of the sample mean decreases as n increases.*
+
+------------------------------------------------------------------------
+
+### Variance of Sample Mean
+
+$$
+Var(\bar{x}) = \frac{\sigma^2}{n}
+$$
+
+*The variability of the sample mean decreases as n increases.*
+
+------------------------------------------------------------------------
