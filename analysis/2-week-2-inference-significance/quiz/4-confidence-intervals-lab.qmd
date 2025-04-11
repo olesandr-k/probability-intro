@@ -1,0 +1,104 @@
+---
+title: "Media Trust: Confidence Interval Example"
+format:
+  html:
+    toc: true
+---
+  
+## Instructions
+  
+This mini-lesson walks through how to calculate and interpret a confidence interval for a sample proportion. You'll use a real-world example involving public trust in the media. There are interactive questions at the end.
+
+ 
+
+## Step 1: The Scenario
+
+> In a random sample of 1,017 Americans, 60% said that **60%** do **not trust** the mass media to report the news **fully, accurately, and fairly**. The standard error associated with this estimate is **0.015** (1.5%). What is the margin of error at 95% confidence level? Calculate a 95% confidence interval and interpret it in context. You may assume that the point estimate is normally distributed 
+
+
+We want to:
+1. Compute the **margin of error** at the 95% confidence level
+2. Calculate the **95% confidence interval**
+3. **Interpret** results
+
+$$
+CI = 
+$$ 
+Let's expand the second component
+$$
+CI = 
+$$ 
+Just to remind what SE is: 
+
+$$
+SE = \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}
+$$
+
+## Step 2: Identify the Ingredients
+
+
+
+## Step 3: Compute Margin of Error
+
+The **margin of error (ME)** is calculated as:
+$$
+ME = 
+$$
+Where:
+
+
+
+In our case:
+
+
+
+So we compute:
+
+So:  
+$$
+ME = 
+$$
+
+
+```r
+
+```
+
+
+
+## Step 4: Compute Confidence Interval
+
+A **confidence interval (CI)** gives a range of plausible values for the population proportion. The formula is:
+
+$$
+CI = 
+$$
+
+Where:
+
+
+
+In our case:
+
+
+
+So we compute:
+
+$$
+CI = 0.60 \pm 0.0294 = (0.5706,\ 0.6294)
+$$
+
+⟶ The 95% confidence interval is **(57.1%, 62.9%)**
+
+```r
+lower <- p_hat - ME
+upper <- p_hat + ME
+c(lower, upper)  
+```
+
+ 
+
+## Step 5: Interpretation
+
+
+
