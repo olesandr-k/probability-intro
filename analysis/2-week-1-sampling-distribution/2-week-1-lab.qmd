@@ -1,5 +1,6 @@
 ---
 title: "Foundations for inference - Sampling distributions"
+subtitle: Raw lab file
 output: statsr:::statswithr_lab
 runtime: shiny
 ---
