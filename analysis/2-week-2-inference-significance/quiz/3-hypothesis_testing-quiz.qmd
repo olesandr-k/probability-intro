@@ -1,0 +1,170 @@
+---
+title: "Hypothesis Testing Practice"
+format: revealjs
+---
+
+## Overview
+
+This mini quiz is designed to help you practice setting up hypotheses for one-sample tests in real-world social science scenarios. Each slide presents a short research situation followed by a multiple-choice question with five lettered options (A–E). Only one option is correct on each slide, and it is marked with a ✅\ checkbox icon for reference. Your task is to carefully read each prompt and select the correct pair of null and alternative hypotheses, focusing on correct notation and alignment with the research question. Use this as a review of how hypotheses are framed around population parameters (like μ or p)—never sample statistics.
+
+## Question 1
+
+A study suggests that the average college student spends 2 hours per week communicating online. You believe this is an underestimate and sample 60 students, who average 3.5 hours.
+
+What are the correct null and alternative hypotheses?
+
+-   A. $H_0: \mu = 2$, $H_A: \mu > 2$ \
+-   B. $H_0: \bar{{x}} = 2$, $H_A: \bar{{x}} > 3.5$\
+-   C. $H_0: \mu = 3.5$, $H_A: \mu < 2$\
+-   D. $H_0: \bar{{x}} = 3.5$, $H_A: \bar{{x}} > 2$\
+-   E. $H_0: \mu > 2$, $H_A: \mu = 2$
+
+## Question 1
+
+A study suggests that the average college student spends 2 hours per week communicating online. You believe this is an underestimate and sample 60 students, who average 3.5 hours.
+
+What are the correct null and alternative hypotheses?
+
+-   A. $H_0: \mu = 2$, $H_A: \mu > 2$ ✅\
+-   B. $H_0: \bar{{x}} = 2$, $H_A: \bar{{x}} > 3.5$\
+-   C. $H_0: \mu = 3.5$, $H_A: \mu < 2$\
+-   D. $H_0: \bar{{x}} = 3.5$, $H_A: \bar{{x}} > 2$\
+-   E. $H_0: \mu > 2$, $H_A: \mu = 2$
+
+------------------------------------------------------------------------
+
+## Question 2
+
+A researcher claims the average adult can remember 7 digits without external aids. A sample of 50 smartphone users shows a mean memory span of 6.3 digits. You suspect technology may reduce short-term memory.
+
+What are the correct hypotheses?
+
+-   A. $H_0: \hat{{x}} = 6.3$, $H_A: \hat{{x}} < 7$\
+-   B. $H_0: \mu = 7$, $H_A: \mu < 7$ \
+-   C. $H_0: \mu < 7$, $H_A: \mu = 7$\
+-   D. $H_0: \mu = 6.3$, $H_A: \mu < 7$\
+-   E. $H_0: \mu = 7$, $H_A: \mu > 7$
+
+## Question 2
+
+A researcher claims the average adult can remember 7 digits without external aids. A sample of 50 smartphone users shows a mean memory span of 6.3 digits. You suspect technology may reduce short-term memory.
+
+What are the correct hypotheses?
+
+-   A. $H_0: \hat{{x}} = 6.3$, $H_A: \hat{{x}} < 7$\
+-   B. $H_0: \mu = 7$, $H_A: \mu < 7$ ✅\
+-   C. $H_0: \mu < 7$, $H_A: \mu = 7$\
+-   D. $H_0: \mu = 6.3$, $H_A: \mu < 7$\
+-   E. $H_0: \mu = 7$, $H_A: \mu > 7$
+
+------------------------------------------------------------------------
+
+## Question 3
+
+Past research suggests 55% of adults aged 18–24 express concern about climate change. You survey 200 college students and find that 65% express concern. You believe concern may have increased.
+
+What are the correct hypotheses?
+
+-   A. $H_0: p = 0.55$, $H_A: p > 0.55$\
+-   B. $H_0: \hat{{p}} = 0.65$, $H_A: \hat{{p}} > 0.55$\
+-   C. $H_0: p = 0.55$, $H_A: p \neq 0.65$\
+-   D. $H_0: p = 0.65$, $H_A: p < 0.55$\
+-   E. $H_0: p = 0.55$, $H_A: p > 0.55$ 
+
+------------------------------------------------------------------------
+
+## Question 3
+
+Past research suggests 55% of adults aged 18–24 express concern about climate change. You survey 200 college students and find that 65% express concern. You believe concern may have increased.
+
+What are the correct hypotheses?
+
+-   A. $H_0: p = 0.55$, $H_A: p > 0.55$\
+-   B. $H_0: \hat{{p}} = 0.65$, $H_A: \hat{{p}} > 0.55$\
+-   C. $H_0: p = 0.55$, $H_A: p \neq 0.65$\
+-   D. $H_0: p = 0.65$, $H_A: p < 0.55$\
+-   E. $H_0: p = 0.55$, $H_A: p > 0.55$ ✅
+
+------------------------------------------------------------------------
+
+## Question 4
+
+A company has historically promoted 50% of qualified applicants regardless of gender. In a recent hiring cycle, only 40% of women were promoted. You suspect gender bias.
+
+What are the correct hypotheses?
+
+-   A. $H_0: p = 0.50$, $H_A: p < 0.50$ \
+-   B. $H_0: p = 0.40$, $H_A: p = 0.50$\
+-   C. $H_0: \hat{{p}} = 0.50$, $H_A: \hat{{p}} < 0.40$\
+-   D. $H_0: p = 0.50$, $H_A: p > 0.50$\
+-   E. $H_0: p = 0.40$, $H_A: p > 0.50$
+
+------------------------------------------------------------------------
+
+## Question 4
+
+A company has historically promoted 50% of qualified applicants regardless of gender. In a recent hiring cycle, only 40% of women were promoted. You suspect gender bias.
+
+What are the correct hypotheses?
+
+-   A. $H_0: p = 0.50$, $H_A: p < 0.50$ ✅\
+-   B. $H_0: p = 0.40$, $H_A: p = 0.50$\
+-   C. $H_0: \hat{{p}} = 0.50$, $H_A: \hat{{p}} < 0.40$\
+-   D. $H_0: p = 0.50$, $H_A: p > 0.50$\
+-   E. $H_0: p = 0.40$, $H_A: p > 0.50$
+
+------------------------------------------------------------------------
+
+## Question 5
+
+The mean self-reported stress score for adults is known to be 6 (on a 1–10 scale). A study of 75 app users reports a mean of 5.3. You hypothesize that using meditation apps reduces stress.
+
+What are the correct hypotheses?
+
+-   A. $H_0: \mu = 5.3$, $H_A: \mu > 6$\
+-   B. $H_0: \mu = 6$, $H_A: \mu < 6$\
+-   C. $H_0: \bar{{x}} = 6$, $H_A: \bar{{x}} < 5.3$\
+-   D. $H_0: \mu = 6$, $H_A: \mu > 6$\
+-   E. $H_0: \mu = 6$, $H_A: \mu < 6$ 
+
+------------------------------------------------------------------------
+
+## Question 5
+
+The mean self-reported stress score for adults is known to be 6 (on a 1–10 scale). A study of 75 app users reports a mean of 5.3. You hypothesize that using meditation apps reduces stress.
+
+What are the correct hypotheses?
+
+-   A. $H_0: \mu = 5.3$, $H_A: \mu > 6$\
+-   B. $H_0: \mu = 6$, $H_A: \mu < 6$\
+-   C. $H_0: \bar{{x}} = 6$, $H_A: \bar{{x}} < 5.3$\
+-   D. $H_0: \mu = 6$, $H_A: \mu > 6$\
+-   E. $H_0: \mu = 6$, $H_A: \mu < 6$ ✅
+
+------------------------------------------------------------------------
+
+## Question 6
+
+In a city, 70% of adults are functionally literate. After a new program, a sample of 150 adults shows 78% literacy. You want to test if the program improved literacy.
+
+What are the correct hypotheses?
+
+-   A. $H_0: p = 0.70$, $H_A: p > 0.70$\
+-   B. $H_0: \hat{{p}} = 0.78$, $H_A: \hat{{p}} > 0.70$\
+-   C. $H_0: p = 0.78$, $H_A: p < 0.70$\
+-   D. $H_0: p = 0.70$, $H_A: p \neq 0.70$\
+-   E. $H_0: p = 0.70$, $H_A: p > 0.70$ 
+
+------------------------------------------------------------------------
+
+## Question 6
+
+In a city, 70% of adults are functionally literate. After a new program, a sample of 150 adults shows 78% literacy. You want to test if the program improved literacy.
+
+What are the correct hypotheses?
+
+-   A. $H_0: p = 0.70$, $H_A: p > 0.70$\
+-   B. $H_0: \hat{{p}} = 0.78$, $H_A: \hat{{p}} > 0.70$\
+-   C. $H_0: p = 0.78$, $H_A: p < 0.70$\
+-   D. $H_0: p = 0.70$, $H_A: p \neq 0.70$\
+-   E. $H_0: p = 0.70$, $H_A: p > 0.70$ ✅
