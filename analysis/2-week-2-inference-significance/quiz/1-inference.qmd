@@ -1,0 +1,257 @@
+---
+title: "Inference Quiz"
+format: revealjs
+editor: visual
+---
+
+## Instructions
+
+Each slide pair contains two versions of the same question:  
+- The **first version** is for students (no answer marked).  
+- The **second version** is for instructors (correct answer is marked with ✅).
+
+---
+
+## Question 1 
+
+In the study of gifted children, researchers tested whether the average IQ of mothers of gifted children differs from the general population mean of 100. The sample mean was 118.2 with a standard error of 1.083.
+
+What is the correct interpretation of a very small p-value (e.g., ≈ 0) in this context?
+
+A. We can be sure that the population mean is 118.2.  
+B. The observed sample mean must be incorrect.  
+C. The data provide strong evidence against the null hypothesis that the mean is 100.  
+D. The study has a large effect size.  
+E. The data are too variable to draw conclusions.
+
+---
+
+## Question 1 - Correct Answer
+
+In the study of gifted children, researchers tested whether the average IQ of mothers of gifted children differs from the general population mean of 100. The sample mean was 118.2 with a standard error of 1.083.
+
+What is the correct interpretation of a very small p-value (e.g., ≈ 0) in this context?
+
+A. We can be sure that the population mean is 118.2.  
+B. The observed sample mean must be incorrect.  
+✅ C. The data provide strong evidence against the null hypothesis that the mean is 100.  
+D. The study has a large effect size.  
+E. The data are too variable to draw conclusions.
+
+---
+
+## Question 2 
+
+What conditions must hold to safely use the normal model to approximate the sampling distribution of a sample mean?
+
+A. A large population and small margin of error.  
+B. A non-random sample and n > 100.  
+C. Independence of observations and either n ≥ 30 or population not strongly skewed.  
+D. Equal variances in the population.  
+E. A sample mean close to the population mean.
+
+---
+
+## Question 2 - Correct Answer
+
+What conditions must hold to safely use the normal model to approximate the sampling distribution of a sample mean?
+
+A. A large population and small margin of error.  
+B. A non-random sample and n > 100.  
+✅ C. Independence of observations and either n ≥ 30 or population not strongly skewed.  
+D. Equal variances in the population.  
+E. A sample mean close to the population mean.
+
+---
+
+## Question 3 
+
+Which of the following is **not** a valid null hypothesis?
+
+A. The average hours of cat sleep is 14 hours.  
+B. The sample mean of cat sleep is 16 hours.  
+C. There is no difference in average sleep between cats and dogs.  
+D. μ = 14  
+E. The population proportion is 0.25.
+
+---
+
+## Question 3 - Correct Answer
+
+Which of the following is **not** a valid null hypothesis?
+
+A. The average hours of cat sleep is 14 hours.  
+✅ B. The sample mean of cat sleep is 16 hours.  
+C. There is no difference in average sleep between cats and dogs.  
+D. μ = 14  
+E. The population proportion is 0.25.
+
+---
+
+## Question 4 
+
+The Central Limit Theorem tells us that:
+
+A. The sample mean will always be normally distributed.  
+B. Larger samples will have larger standard errors.  
+C. The sampling distribution of the mean will be nearly normal if sample size is large enough.  
+D. Confidence intervals are always accurate.  
+E. Sample means are always equal to population means.
+
+---
+
+## Question 4 - Correct Answer
+
+The Central Limit Theorem tells us that:
+
+A. The sample mean will always be normally distributed.  
+B. Larger samples will have larger standard errors.  
+✅ C. The sampling distribution of the mean will be nearly normal if sample size is large enough.  
+D. Confidence intervals are always accurate.  
+E. Sample means are always equal to population means.
+
+---
+
+## Question 5 
+
+In the simulation with bank managers deciding on promotions, what does the **null hypothesis** assert?
+
+A. Males and females have equal qualifications.  
+B. The resume was not manipulated.  
+C. There is bias in the decision process.  
+D. Promotion decisions are independent of gender.  
+E. The difference in proportions is real.
+
+---
+
+## Question 5 - Correct Answer
+
+In the simulation with bank managers deciding on promotions, what does the **null hypothesis** assert?
+
+A. Males and females have equal qualifications.  
+B. The resume was not manipulated.  
+C. There is bias in the decision process.  
+✅ D. Promotion decisions are independent of gender.  
+E. The difference in proportions is real.
+
+---
+
+## Question 6 
+
+Which statement about Type I and Type II errors is correct?
+
+A. Type I error is failing to reject a false null hypothesis.  
+B. Type I error is rejecting a true null hypothesis.  
+C. Type II error is rejecting a false null hypothesis.  
+D. Type II error means your sample size is too small.  
+E. Power = probability of making a Type I error.
+
+---
+
+## Question 6 - Correct Answer
+
+Which statement about Type I and Type II errors is correct?
+
+A. Type I error is failing to reject a false null hypothesis.  
+✅ B. Type I error is rejecting a true null hypothesis.  
+C. Type II error is rejecting a false null hypothesis.  
+D. Type II error means your sample size is too small.  
+E. Power = probability of making a Type I error.
+
+---
+
+## Question 7 
+
+Which scenario **illustrates** statistical significance but not practical significance?
+
+A. A study finds a large effect size with p < 0.05.  
+B. A huge sample finds a 0.1 point GPA difference with p < 0.001.  
+C. A small sample fails to reject H₀.  
+D. The confidence interval is wide.  
+E. A new method doubles graduation rates.
+
+---
+
+## Question 7 - Correct Answer
+
+Which scenario **illustrates** statistical significance but not practical significance?
+
+A. A study finds a large effect size with p < 0.05.  
+✅ B. A huge sample finds a 0.1 point GPA difference with p < 0.001.  
+C. A small sample fails to reject H₀.  
+D. The confidence interval is wide.  
+E. A new method doubles graduation rates.
+
+---
+
+## Question 8 
+
+When a confidence interval for a population mean **does not contain the null value**, what does that suggest?
+
+A. Reject the null hypothesis.  
+B. Fail to reject the null hypothesis.  
+C. The standard error is too small.  
+D. The sample is not random.  
+E. Increase your alpha level.
+
+---
+
+## Question 8 - Correct Answer
+
+When a confidence interval for a population mean **does not contain the null value**, what does that suggest?
+
+✅ A. Reject the null hypothesis.  
+B. Fail to reject the null hypothesis.  
+C. The standard error is too small.  
+D. The sample is not random.  
+E. Increase your alpha level.
+
+---
+
+## Question 9 
+
+The power of a test increases when:
+
+A. We lower the significance level.  
+B. The null value is closer to the observed mean.  
+C. The population is smaller.  
+D. The sample size increases.  
+E. The standard deviation increases.
+
+---
+
+## Question 9 - Correct Answer
+
+The power of a test increases when:
+
+A. We lower the significance level.  
+B. The null value is closer to the observed mean.  
+C. The population is smaller.  
+✅ D. The sample size increases.  
+E. The standard deviation increases.
+
+---
+
+## Question 10 
+
+Which pair correctly links hypothesis testing and confidence intervals?
+
+A. α = 0.05 → 99% confidence level  
+B. α = 0.05 two-sided test → 95% confidence level  
+C. α = 0.05 one-sided test → 95% confidence level  
+D. CI excludes 0 → fail to reject H₀  
+E. CI includes H₀ → reject the null
+
+---
+
+## Question 10 - Correct Answer
+
+Which pair correctly links hypothesis testing and confidence intervals?
+
+A. α = 0.05 → 99% confidence level  
+✅ B. α = 0.05 two-sided test → 95% confidence level  
+C. α = 0.05 one-sided test → 95% confidence level  
+D. CI excludes 0 → fail to reject H₀  
+E. CI includes H₀ → reject the null
+
+---
